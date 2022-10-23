@@ -1,21 +1,41 @@
 from django.contrib import admin
-from .models import Filmwork, PersonRole
+from .models import Genre, Person, FilmWork
 
 
-class PersonRoleInline(admin.TabularInline):
-    model = PersonRole
+class PersonInLineAdmin(admin.TabularInline):
+    model = FilmWork.persons.through
     extra = 0
+
+class GenreInLineAdmin(admin.TabularInLine):
+    model = FilmWork.genres.through
+    extra = 0
+
+
+@admin.register(Genre)
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+@adming.register(Person)
+class PersonAdmin(adming.ModelAdmin):
+    list_display = ('full_name', 'birth_date')
+    fields = ('full_name', 'birth_date')
+    inlines = (PersonInLineAdmin,)
+    search_fields = ('full_name', 'birth_date')
+
 
 @admin.register(Filmwork)
 class FilmworkAdmin(admin.ModelAdmin):
-    # отображение полей в списке
     list_display = ('title', 'type', 'creation_date', 'rating')
-    # порядок следования полей в форме создания/редактирования
     fields = (
-'title', 'type', 'description', 'creation_date',
-'certificate', 'file_path', 'rating', 'genres'
-    ) 
+        'title', 'type', 'description', 'creation_date',
+        'certificate', 'file_path', 'rating',
+    )
 
+    raw_id_fields = ('genres', 'persons')
     inlines = [
-        PersonRoleInline
-    ] 
+        PersonInLineAdmin,
+        GenreInLineAdmin,
+    ]
+    search_fields = ('title', 'description', 'type', 'genres')
+    

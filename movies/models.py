@@ -1,17 +1,18 @@
-import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils import timezone
+import uuid
 
 class TimeStampedMixin(models.Model):
     class Meta:
         abstract = True
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now())
+    updated_at = models.DateTimeField(default=timezone.now())
 
 
-class FilmworkType(models.TextChoices):
+class FilmWorkType(models.TextChoices):
     MOVIE = 'movie', _('movie')
     TV_SHOW = 'tv_show', _('TV show')
 
@@ -23,8 +24,8 @@ class RoleType(models.TextChoices):
 
 
 class Genre(TimeStampedMixin):
-    id = model.UUIDField(
-        primary_key=True, defualt=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(
         _('title'), unique=True, max_length=100)
     description = models.TextField(
@@ -58,13 +59,13 @@ class Person(TimeStampedMixin):
         ordering = ['full_name']
 
 
-class Filmwork(TimeStampedModel):
+class FilmWork(TimeStampedMixin):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     
-    title = model.CharField(
+    title = models.CharField(
         _('title'), max_length=250)
-    description = model.TextField(
+    description = models.TextField(
         _('description'), blank=True, null=True)
     creation_date = models.DateField(
         _('creation date'), blank=True, null=True)

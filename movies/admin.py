@@ -6,7 +6,7 @@ class PersonInLineAdmin(admin.TabularInline):
     model = FilmWork.persons.through
     extra = 0
 
-class GenreInLineAdmin(admin.TabularInLine):
+class GenreInLineAdmin(admin.TabularInline):
     model = FilmWork.genres.through
     extra = 0
 
@@ -16,15 +16,15 @@ class GenreAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
-@adming.register(Person)
-class PersonAdmin(adming.ModelAdmin):
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'birth_date')
     fields = ('full_name', 'birth_date')
     inlines = (PersonInLineAdmin,)
     search_fields = ('full_name', 'birth_date')
 
 
-@admin.register(Filmwork)
+@admin.register(FilmWork)
 class FilmworkAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'creation_date', 'rating')
     fields = (
@@ -38,4 +38,3 @@ class FilmworkAdmin(admin.ModelAdmin):
         GenreInLineAdmin,
     ]
     search_fields = ('title', 'description', 'type', 'genres')
-    

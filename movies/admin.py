@@ -6,6 +6,7 @@ class PersonInLineAdmin(admin.TabularInline):
     model = FilmWork.persons.through
     extra = 0
 
+
 class GenreInLineAdmin(admin.TabularInline):
     model = FilmWork.genres.through
     extra = 0
@@ -25,16 +26,15 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 @admin.register(FilmWork)
-class FilmworkAdmin(admin.ModelAdmin):
+class FilmWorkAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'creation_date', 'rating')
     fields = (
-        'title', 'type', 'description', 'creation_date',
-        'certificate', 'file_path', 'rating',
+        'title', 'type', 'description', 'creation_date', 'certificate',
+        'file_path', 'rating'
     )
-
     raw_id_fields = ('genres', 'persons')
     inlines = [
         PersonInLineAdmin,
         GenreInLineAdmin,
     ]
-    search_fields = ('title', 'description', 'type', 'genres')
+    search_fields = ('title', 'description', 'type',)

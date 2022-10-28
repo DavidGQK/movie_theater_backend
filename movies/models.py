@@ -1,20 +1,22 @@
+import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils import timezone
-import uuid
+
 
 class TimeStampedMixin(models.Model):
     class Meta:
         abstract = True
 
-    created_at = models.DateTimeField(default=timezone.now())
-    updated_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(
+        auto_now_add=True)
+    updated_at = models.DateTimeField(
+        auto_now=True)
 
 
 class FilmWorkType(models.TextChoices):
     MOVIE = 'movie', _('movie')
-    TV_SHOW = 'tv_show', _('TV show')
+    TV_SHOW = 'tv_show', _('TV Show')
 
 
 class RoleType(models.TextChoices):
@@ -27,7 +29,9 @@ class Genre(TimeStampedMixin):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(
-        _('title'), unique=True, max_length=100)
+        _('title'),
+        unique=True,
+        max_length=100)
     description = models.TextField(
         _('description'), blank=True, null=True)
 
@@ -62,7 +66,7 @@ class Person(TimeStampedMixin):
 class FilmWork(TimeStampedMixin):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
-    
+
     title = models.CharField(
         _('title'), max_length=250)
     description = models.TextField(
@@ -71,7 +75,7 @@ class FilmWork(TimeStampedMixin):
         _('creation date'), blank=True, null=True)
     certificate = models.TextField(
         _('certificate'), blank=True, null=True)
-    file_paht = models.FileField(
+    file_path = models.FileField(
         _('file'), upload_to='film_works/',
         blank=True, null=True)
     rating = models.FloatField(

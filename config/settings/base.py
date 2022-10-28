@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
+print(BASE_DIR)
 load_dotenv()
 
 SECRET_KEY = '!4sj)o#dkp1(nhdxf9o&&of622+b3ati&@g3*qhwt)!3w)(6b+'

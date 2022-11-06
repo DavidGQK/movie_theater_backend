@@ -4,12 +4,11 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-print(BASE_DIR)
-load_dotenv()
 
-SECRET_KEY = '!4sj)o#dkp1(nhdxf9o&&of622+b3ati&@g3*qhwt)!3w)(6b+'
+load_dotenv('.env')
 
-DEBUG = True
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG =  os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -58,14 +57,19 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
-        #'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', 'movies-postgres'),
         'PORT': os.environ.get('DB_PORT', 5432),
-        'OPTIONS': {
-            'options': '-c search_path=public,content'
-        }
+        'OPTIONS': {'options': '-c search_path=public,content'}
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -92,6 +96,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = "/code/config/staticfiles/"
+STATIC_ROOT = os.path.join(BASE_DIR, "config/staticfiles")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

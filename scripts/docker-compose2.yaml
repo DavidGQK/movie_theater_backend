@@ -1,0 +1,28 @@
+version: '3'
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: 2.dockerfile
+    ports:
+      # Перенаправляем запросы, поступающие к localhost:8010 на порт 8010.
+      - 8010:8010
+    volumes:
+      # Задаём mount bind для каталога хост-машины. До запуска Docker Сompose нужно создать каталог host_volume
+      - ./host_volume:/internal_volume
+      # Просим Docker привязать к контейнеру именованный том media
+      - media:/media
+
+
+  neighbour:
+  # Если сервис основан на одном из готовых образов, используйте параметр image вместо build 
+    image: curlimages/curl:latest
+    # Укажем целью контейнера команду curl. С параметром -s в консоль выведется тело html-страницы.
+    entrypoint: ["curl", "-s", "backend:8010"]
+    # Сервис должен запуститься только после того, как backend будет готов принимать запросы
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  media:

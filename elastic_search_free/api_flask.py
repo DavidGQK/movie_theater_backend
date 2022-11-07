@@ -18,7 +18,6 @@ BASE_ES_URL = os.getenv('BASE_ES_URL', default='http://localhost:9200')
 class Actor:
     id: int
     name: str
-
     def to_dict(self) -> dict:
         return {
             'id': int(self.id),
@@ -29,7 +28,6 @@ class Actor:
 class Writer:
     id: str
     name: str
-
     def to_dict(self) -> dict:
         return {
             'id': self.id,
@@ -41,7 +39,6 @@ class ShortMovie:
     id: str
     title: str
     imdb_rating: float
-
     def to_dict(self) -> dict:
         return {
             'id': self.id,
@@ -116,13 +113,14 @@ def get_movie_by_id(movie_id: str) -> Optional[Movie]:
     return movie
 
 def search_movies(
-        *,
-        search_query: Optional[str] = None,
-        sort_order: SortOrder = SortOrder.ASC,
-        sort: SortField = SortField.ID,
-        page: int = 1,
-        limit: int = 50,
+    *,
+    search_query: Optional[str] = None,
+    sort_order: SortOrder = SortOrder.ASC,
+    sort: SortField = SortField.ID,
+    page: int = 1,
+    limit: int = 50,
 ) -> List[ShortMovie]:
+
     sort_value = sort.value
     if sort_value == SortField.TITLE.value:
         sort_value = f'{SortField.TITLE.value}.raw'
@@ -141,16 +139,16 @@ def search_movies(
     if search_query:
         request_data['query'] = {
             'multi_match': {
-                'query': search_query,
-                'fuzziness': 'auto',
-                'fields': [
-                    'title^5',
-                    'description^4',
-                    'genre^3',
-                    'actors_names^3',
-                    'writers_names^2',
-                    'director'
-                ]
+            'query': search_query,
+            'fuzziness': 'auto',
+            'fields': [
+                'title^5',
+                'description^4',
+                'genre^3',
+                'actors_names^3',
+                'writers_names^2',
+                'director'
+            ]
             }
         }
 
@@ -166,6 +164,7 @@ def search_movies(
     data = response.json()
     result = data['hits']['hits']
     movies = []
+
     if result:
         for record in result:
             movie_raw = record['_source']
@@ -198,6 +197,7 @@ class SearchMoviesValidator(Form):
         ],
         default=SortField.ID.value,
     )
+
     sort_order = SelectField(
         'SortOrder',
         choices=[
@@ -228,7 +228,6 @@ def movies_list():
     validation_errors = []
     if not form.validate():
         validation_errors = validation_errors_to_dict(form.errors)
-
     if validation_errors:
         return jsonify(detail=validation_errors), HTTPStatus.UNPROCESSABLE_ENTITY
 

@@ -10,6 +10,8 @@ services:
       - /postgresql/data:/var/lib/postgresql/data
     env_file:
       - docker-compose-db.env
+    networks:
+      - movie_project_net
 
   movies_admin:
     container_name: movies_admin
@@ -26,6 +28,8 @@ services:
       - static_volume:/code/config/staticfiles
     depends_on:
       - movies-postgres
+    networks:
+      - movie_project_net
 
   nginx:
     container_name: movies_nginx
@@ -39,5 +43,74 @@ services:
       - 80:80
     depends_on:
       - movies_admin
+    networks:
+      - movie_project_net
+
+  movies_elastic:
+    container_name: movies_elastic
+    image: elasticsearch:7.7.0
+    environment:
+    - discovery.type=single-node
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    restart: always
+    ports:
+      - 9200:9200
+    networks:
+      - movie_project_net
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  movies_kibana:
+    container_name: movies_kibana
+    image: kibana:7.7.0
+    environment:
+    - discovery.type=single-node
+    - "ELASTICSEARCH_HOSTS=http://movies_elastic:9200"
+    restart: always
+    ports:
+      - 5601:5601
+    networks:
+      - movie_project_net
+    depends_on:
+      - movies_elastic
+
+  movies_redis:
+    container_name: movies_redis
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - movie_project_net
+
+  postgres_to_es:
+    container_name: postgres_to_es
+    build:
+      context: ./postgres_to_es
+      dockerfile: Dockerfile
+    command: python main.py
+    restart: always
+    env_file: 
+      - ./postgres_to_es/.env
+    volumes:
+      - static_volume:/code/staticfiles
+    depends_on:
+      - movies_admin
+      - movies_redis
+      - movies_elastic
+      - movies_kibana
+      - movies-postgres
+    networks:
+      - movie_project_net
+
 volumes:
   static_volume:
+  redis_data:
+  elasticsearch-data:
+    driver: local
+
+networks:
+  movie_project_net:
+    name: movie_project_net
+    driver: bridge

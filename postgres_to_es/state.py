@@ -1,6 +1,6 @@
 import abc
-import datetime
 import json
+import datetime
 from typing import Any, Optional
 
 from redis import Redis
@@ -9,12 +9,12 @@ from redis import Redis
 class BaseStorage:
     @abc.abstractmethod
     def save_state(self, state: dict) -> None:
-        """Сохранить состояние в постоянное хранилище"""
+        """Save the state in constant storage"""
         pass
 
     @abc.abstractmethod
     def retrieve_state(self) -> dict:
-        """Загрузить состояние локально из постоянного хранилища"""
+        """Download the state localy from storage"""
         pass
 
 
@@ -37,13 +37,13 @@ class State:
         self.storage = storage
 
     def set_state(self, key: str, value: Any) -> None:
-        """Установить состояние для определённого ключа"""
+        """Set the state by the key"""
         state = self.storage.retrieve_state()
         state[key] = value.isoformat()
         self.storage.save_state(state)
 
     def get_state(self, key: str) -> Any:
-        """Получить состояние по определённому ключу"""
+        """Get the state by the key"""
         state = self.storage.retrieve_state()
         state = state.get(key)
         if state:

@@ -1,7 +1,7 @@
 import logging
 from typing import Tuple
 
-from pydantic import BaseSettings, Field
+from pydantic import Field, BaseSettings
 from pydantic.error_wrappers import ValidationError
 
 
@@ -10,8 +10,8 @@ class PostgresSettings(BaseSettings):
     user: str = Field(..., env="POSTGRES_USER")
     password: str = Field(..., env="POSTGRES_PASSWORD")
     host: str = Field(..., env="POSTGRES_HOST")
-    port: int = Field(..., env="POSTGRES_PORT")
-    options: str = "-c search_path=public,content"
+    port: str = Field(..., env="POSTGRES_PORT")
+    options: str = "-c search_path=content"
 
     class Config:
         env_file = ".env"
@@ -42,11 +42,3 @@ def load_etl_settings() -> Tuple[PostgresSettings, ElasticSettings, RedisSetting
     except ValidationError:
         logging.error("Could load settings from enviromentals or .env")
         raise SystemExit
-
-
-# def load_etl_settings():
-#     try:
-#         return (PostgresSettings())
-#     except ValidationError:
-#         logging.error("Could load settings from enviromentals or .env")
-#         raise SystemExit

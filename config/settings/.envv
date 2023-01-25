@@ -1,8 +1,0 @@
-DB_NAME='movies_database'
-DB_USER='postgres'
-DB_PASSWORD=''
-DB_HOST=localhost
-DB_PORT=5432
-db_sqlite_file=db.sqlite
-page_size=1000
-schema=content

@@ -29,13 +29,8 @@ class FilmService(MainService):
             imdb_sorting = "asc"
         if filter_genre:
             body["query"] = {
-                "nested": {
-                    "path": "genres",
-                    "query": {
                         "bool": {"must": [{"match": {f"genres.uuid": filter_genre}}]}
-                    },
                 }
-            }
         elif query != "":
             body["query"] = {
                 "multi_match": {

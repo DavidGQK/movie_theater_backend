@@ -1,8 +1,9 @@
 import asyncio
 import logging
+from typing import List
 from uuid import UUID
 from functools import lru_cache
-from typing import List
+
 from fastapi import Depends
 from db.elastic import get_elastic
 from services.base import MainService
@@ -10,7 +11,7 @@ from services.film import FilmService
 from elasticsearch import AsyncElasticsearch
 from models.person import Person, PersonFilm, PersonRole
 
-PERSON_REDIS_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 минут
+PERSON_REDIS_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 min
 
 logger = logging.getLogger(__name__)
 
@@ -55,16 +56,10 @@ class PersonService(MainService):
         films = await self._search(
             index=FilmService.index,
             query={
-                "nested": {
-                    "path": elastic_path,
-                    "query": {
                         "bool": {
                             "must": [{"match": {f"{elastic_path}.uuid": person_uuid}}]
                         }
                     },
-                }
-            },
-            fields=["hits.hits._source.uuid", "hits.hits._source.title"],
         )
         return [PersonFilm(role=role, **film["_source"]) for film in films]
 

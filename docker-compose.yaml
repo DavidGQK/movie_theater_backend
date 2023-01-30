@@ -18,16 +18,16 @@ services:
   movies_admin:
     container_name: movies_admin
     build:
-      context: .
-      dockerfile: /_MYF/1_pr/Dockerfile
+      context: ./movies_admin
+      dockerfile: /_MYF/1_pr/movies_admin/Dockerfile
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 # python manage.py runserver 0.0.0.0:8000 
     restart: always
+    env_file: 
+      - /_MYF/1_pr/env
     ports:
       - 7000:8000
     expose:
       - "8000"
-    env_file: 
-      - .env
     volumes:
       - static_volume:/code/config/staticfiles
     depends_on:

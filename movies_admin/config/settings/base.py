@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-load_dotenv('.env')
+# load_dotenv('.env')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG =  os.environ.get('DEBUG')

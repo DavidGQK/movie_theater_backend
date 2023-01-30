@@ -4,8 +4,8 @@ from typing import List
 import backoff
 import psycopg2
 from connections import backoff_hdlr
+from models import Genre, Person, FilmWork
 from extractors.base_extractor import BaseExtractor
-from models import FilmWork, Genre, Person
 
 
 class MoviesPostgresExtractor(BaseExtractor):

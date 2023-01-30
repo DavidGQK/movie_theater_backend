@@ -1,7 +1,7 @@
 import uuid
-from dataclasses import dataclass, field, fields
 from datetime import datetime
 from typing import List, Type, Union
+from dataclasses import field, fields, dataclass
 
 from dateutil import parser
 

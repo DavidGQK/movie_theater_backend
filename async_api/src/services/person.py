@@ -1,15 +1,15 @@
 import asyncio
 import logging
-from functools import lru_cache
-from typing import List
 from uuid import UUID
+from typing import List
+from functools import lru_cache
 
-from db.elastic import get_elastic
-from elasticsearch import AsyncElasticsearch
 from fastapi import Depends
-from models.person import Person, PersonFilm, PersonRole
+from db.elastic import get_elastic
 from services.base import MainService
 from services.film import FilmService
+from elasticsearch import AsyncElasticsearch
+from models.person import Person, PersonFilm, PersonRole
 
 PERSON_REDIS_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 min
 

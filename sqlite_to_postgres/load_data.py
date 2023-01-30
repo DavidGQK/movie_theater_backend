@@ -1,18 +1,24 @@
-import logging
 import os
+import logging
 import sqlite3
-from collections import OrderedDict
-from dataclasses import dataclass
 from os import environ
+from dataclasses import dataclass
+from collections import OrderedDict
 from typing import Dict, List, Tuple
 
 import psycopg2
 from dacite import from_dict
 from dotenv import load_dotenv
-from psycopg2.extensions import connection as _connection
 from psycopg2.extras import DictCursor, execute_values
-from utils.dclasses import (FilmWork, FilmWorkGenre, FilmWorkPerson, Genre,
-                            Person, sanitize_field)
+from psycopg2.extensions import connection as _connection
+from utils.dclasses import (
+    Genre,
+    Person,
+    FilmWork,
+    FilmWorkGenre,
+    FilmWorkPerson,
+    sanitize_field,
+)
 
 logger = logging.getLogger(__file__)
 logging.basicConfig(filename="load_data.py.log", level=logging.DEBUG)

@@ -2,10 +2,10 @@ import logging
 from uuid import UUID
 
 from aiocache import cached
+from pydantic import BaseModel
 from db.redis import get_redis_cache_config
 from elasticsearch import AsyncElasticsearch
-from elasticsearch.exceptions import NotFoundError, RequestError
-from pydantic import BaseModel
+from elasticsearch.exceptions import RequestError, NotFoundError
 
 CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 min
 

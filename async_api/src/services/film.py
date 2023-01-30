@@ -1,11 +1,11 @@
-from functools import lru_cache
 from typing import Optional
+from functools import lru_cache
 
-from db.elastic import get_elastic
-from elasticsearch import AsyncElasticsearch
 from fastapi import Depends
 from models.film import Film
+from db.elastic import get_elastic
 from services.base import MainService
+from elasticsearch import AsyncElasticsearch
 
 FILM_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 min
 

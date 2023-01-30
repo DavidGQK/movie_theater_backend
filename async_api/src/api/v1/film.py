@@ -7,7 +7,7 @@ import sys
 from http import HTTPStatus
 from typing import Dict, List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import Query, Depends, APIRouter, HTTPException
 
 # caution: path[0] is reserved for script path (or '' in REPL)
 # sys.path.insert(1, '/path/to/application/app/folder')

@@ -1,11 +1,11 @@
-from typing import Optional
 from functools import lru_cache
+from typing import Optional
 
+from db.elastic import get_elastic
+from elasticsearch import AsyncElasticsearch
 from fastapi import Depends
 from models.film import Film
-from db.elastic import get_elastic
 from services.base import MainService
-from elasticsearch import AsyncElasticsearch
 
 FILM_CACHE_EXPIRE_IN_SECONDS = 60 * 5  # 5 min
 
@@ -29,8 +29,8 @@ class FilmService(MainService):
             imdb_sorting = "asc"
         if filter_genre:
             body["query"] = {
-                        "bool": {"must": [{"match": {f"genres.uuid": filter_genre}}]}
-                }
+                "bool": {"must": [{"match": {f"genres.uuid": filter_genre}}]}
+            }
         elif query != "":
             body["query"] = {
                 "multi_match": {

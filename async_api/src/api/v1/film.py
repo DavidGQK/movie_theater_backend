@@ -1,14 +1,14 @@
-
 import os
-print('abs path:', os.path.abspath(__file__))
 
+print("abs path:", os.path.abspath(__file__))
 
-from http import HTTPStatus
-from typing import Optional
-from typing import List, Dict
-from fastapi import Query, Depends, APIRouter, HTTPException
 
 import sys
+from http import HTTPStatus
+from typing import Dict, List, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Query
+
 # caution: path[0] is reserved for script path (or '' in REPL)
 # sys.path.insert(1, '/path/to/application/app/folder')
 # sys.path.append("/code")
@@ -16,8 +16,6 @@ sys.path.append("/code/models")
 sys.path.append("/code/services")
 from models.film import Film
 from services.film import FilmService, get_film_service
-
-
 
 router = APIRouter()
 

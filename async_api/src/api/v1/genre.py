@@ -1,9 +1,9 @@
-from uuid import UUID
 from http import HTTPStatus
-from typing import Optional, List, Dict
+from typing import Dict, List, Optional
+from uuid import UUID
 
+from fastapi import APIRouter, Depends, HTTPException
 from models.genre import Genre
-from fastapi import Depends, APIRouter, HTTPException
 from services.genre import GenreService, get_genre_service
 
 router = APIRouter()

@@ -1,9 +1,8 @@
 from uuid import UUID
 
-from pydantic import BaseModel
-
-from genre import Genre
 from abstract_model import AbstractModel
+from genre import Genre
+from pydantic import BaseModel
 
 
 class PersonForFilm(BaseModel):

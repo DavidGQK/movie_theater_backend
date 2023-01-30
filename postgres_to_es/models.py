@@ -1,7 +1,7 @@
-from uuid import UUID
-from typing import Set
+from dataclasses import dataclass, field
 from datetime import date, datetime
-from dataclasses import field, dataclass
+from typing import Set
+from uuid import UUID
 
 
 @dataclass(frozen=True)

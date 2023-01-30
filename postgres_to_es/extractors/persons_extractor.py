@@ -1,9 +1,10 @@
 from typing import List
+
 import backoff
 import psycopg2
-from models import Person
 from connections import backoff_hdlr
 from extractors.base_extractor import BaseExtractor
+from models import Person
 
 
 class PersonsPostgresExtractor(BaseExtractor):

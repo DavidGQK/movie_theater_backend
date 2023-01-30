@@ -3,8 +3,8 @@ from typing import List
 
 import backoff
 from connections import backoff_hdlr
+from elasticsearch import ElasticsearchException, RequestError, helpers
 from elasticsearch.client import Elasticsearch as ES_client
-from elasticsearch import RequestError, ElasticsearchException, helpers
 
 
 class ESLoader:

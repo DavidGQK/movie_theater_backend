@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
 
 
@@ -49,4 +50,8 @@ class FilmWorkAdmin(admin.ModelAdmin):
         PersonInLineAdmin,
         GenreInLineAdmin,
     ]
-    search_fields = ("title", "description", "type", )
+    search_fields = (
+        "title",
+        "description",
+        "type",
+    )

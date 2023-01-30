@@ -1,30 +1,23 @@
 import logging
+from datetime import datetime
 from os import environ
 from time import sleep
-from datetime import datetime
 
-import psycopg2
 import elasticsearch
-from redis import Redis
+import psycopg2
+from connections import (connect_to_elastic, connect_to_postges,
+                         connect_to_redis)
+from correct_terminate import TerminateProtected
 from dotenv import load_dotenv
+from extractors import (BaseExtractor, GenresPostgresExtractor,
+                        MoviesPostgresExtractor, PersonsPostgresExtractor)
 from loader.indexes import INDEXES
 from loader.loader import ESLoader
-from state import State, RedisStorage
+from redis import Redis
 from setting_loaders import load_etl_settings
-from correct_terminate import TerminateProtected
-from connections import connect_to_redis, connect_to_elastic, connect_to_postges
-from transformers import (
-    BaseTransformer,
-    GenresTransformer,
-    MoviesTransformer,
-    PersonTransformer,
-)
-from extractors import (
-    BaseExtractor,
-    GenresPostgresExtractor,
-    MoviesPostgresExtractor,
-    PersonsPostgresExtractor,
-)
+from state import RedisStorage, State
+from transformers import (BaseTransformer, GenresTransformer,
+                          MoviesTransformer, PersonTransformer)
 
 # logger = logging.getLogger(__file__)
 # logging.basicConfig(filename='main_py.log',level=logging.INFO)

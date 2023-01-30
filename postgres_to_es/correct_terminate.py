@@ -1,10 +1,10 @@
-import sys
-import signal
 import logging
+import signal
+import sys
 from datetime import datetime
 
-from psycopg2.extensions import connection
 from elasticsearch.client import Elasticsearch
+from psycopg2.extensions import connection
 
 
 class TerminateProtected:

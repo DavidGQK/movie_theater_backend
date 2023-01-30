@@ -1,12 +1,12 @@
 import logging
 
 import backoff
-import psycopg2
 import elasticsearch
-from redis import Redis
+import psycopg2
 from psycopg2.extras import DictCursor
-from urllib3.exceptions import NewConnectionError
+from redis import Redis
 from redis.exceptions import ConnectionError as RedisConnectionError
+from urllib3.exceptions import NewConnectionError
 
 
 def backoff_hdlr(details):

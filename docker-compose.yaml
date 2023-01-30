@@ -23,7 +23,7 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 # python manage.py runserver 0.0.0.0:8000 
     restart: always
     env_file: 
-      - /_MYF/1_pr/env
+      - /_MYF/1_pr/.env
     ports:
       - 7000:8000
     expose:

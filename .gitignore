@@ -2,6 +2,9 @@
 *.env
 *.sqlite3
 /scripts
-/elastic_search_free
 *.log
 __pycache__/
+.*/
+*.pyc
+static/
+staticfiles/

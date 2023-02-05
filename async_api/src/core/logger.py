@@ -3,7 +3,7 @@ LOG_DEFAULT_HANDLERS = [
     "console",
 ]
 
-# Logging could be set through uvicorn-сервера.
+# Logging could be set through uvicorn server.
 # Logging in Python
 # https://docs.python.org/3/howto/logging.html
 # https://docs.python.org/3/howto/logging-cookbook.html

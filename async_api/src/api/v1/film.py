@@ -77,7 +77,7 @@ async def films_search(
     sort_: Optional[str] = Query(None, regex="^-?[a-zA-Z_]+$", alias="page[size]"),
     page_number_: int = Query(1, alias="page[number]"),
     page_size_: int = Query(50, alias="page[size]"),
-    query_: Optional[str] = Query(None, title="Поисковая строка", alias="query"),
+    query_: Optional[str] = Query(None, title="Search line", alias="query"),
 ) -> List[dict]:
     return await get_films(
         film_service=film_service,

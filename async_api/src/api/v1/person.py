@@ -20,7 +20,7 @@ class PersonFilm(BaseModel):
 class Person(BaseModel):
     uuid: UUID
     full_name: str
-    films: list[PersonFilm] = []
+    films: List[PersonFilm] = []
 
 
 @router.get("/search", response_model=List[Person])

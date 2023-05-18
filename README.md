@@ -1,4 +1,5 @@
 # Movie Theater (Backend)
+The following services are used: FastAPI, Django, Nginx, Postgres, ElasticSearch, Kibana, Redis
 
 ## Example
 - http://localhost/admin/
